@@ -1,0 +1,2 @@
+http://localhost.localdomain
+centos7.example.com:7778/acc

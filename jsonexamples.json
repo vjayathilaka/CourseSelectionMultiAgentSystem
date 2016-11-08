@@ -1,0 +1,62 @@
+{"courseName":"Medicine"5a5
+"offeredUniversitiesMap":{"1":{"universityName":"University Of Colombo"5a5"id":1}5a5
+"2":{"universityName":"University of Peradeniya"5a5"id":2}5a5
+"3":{"universityName":"University of Moratuwa"5a5"id":3}}5a5
+"districtZScoresMap":{"1":{"districtName":"Colombo"5a5"id":15a5"zScore":1.9247}5a5
+"2":{"districtName":"Gampaha"5a5"id":25a5"zScore":1.7977}5a5
+"3":{"districtName":"Kalutara"5a5"id":35a5"zScore":1.7937}5a5
+"4":{"districtName":"Matale"5a5"id":45a5"zScore":1.7944}5a5
+"5":{"districtName":"Kandy"5a5"id":55a5"zScore":1.7644}5a5
+"6":{"districtName":"NuwaraEliya"5a5"id":65a5"zScore":1.5819}5a5
+"7":{"districtName":"Galle"5a5"id":75a5"zScore":1.8452}5a5
+"8":{"districtName":"Matara"5a5"id":85a5"zScore":1.7706}5a5
+"9":{"districtName":"Hambantota"5a5"id":95a5"zScore":1.8107}5a5
+"10":{"districtName":"Jaffna"5a5"id":105a5"zScore":1.7706}5a5
+"11":{"districtName":"Kilinochchi"5a5"id":115a5"zScore":1.3076}5a5
+"12":{"districtName":"Mannar"5a5"id":125a5"zScore":1.6489}5a5
+"13":{"districtName":"Mullaitivu"5a5"id":135a5"zScore":0.2908}5a5
+"14":{"districtName":"Vavuniya"5a5"id":145a5"zScore":1.1249}5a5
+"15":{"districtName":"Trincomalee"5a5"id":155a5"zScore":1.5272}5a5
+"16":{"districtName":"Batticaloa"5a5"id":165a5"zScore":1.6827}5a5
+"17":{"districtName":"Ampara"5a5"id":175a5"zScore":1.4716}5a5
+"18":{"districtName":"Puttalam"5a5"id":185a5"zScore":1.5579}5a5
+"19":{"districtName":"Kurunegala"5a5"id":195a5"zScore":1.8654}5a5
+"20":{"districtName":"Anuradhapura"5a5"id":205a5"zScore":1.5549}5a5
+"21":{"districtName":"Polonnaruwa"5a5"id":215a5"zScore":1.6311}5a5
+"22":{"districtName":"Badulla"5a5"id":225a5"zScore":1.7306}5a5
+"23":{"districtName":"Monaragala"5a5"id":235a5"zScore":1.4217}5a5
+"24":{"districtName":"Kegalle"5a5"id":245a5"zScore":1.8445}5a5
+"25":{"districtName":"Ratnapura"5a5"id":255a5"zScore":1.6959}}5a5"schemesMap":{"1":"SCIENCE"}}
+
+{"courseName":"ICT"5a5"offeredUniversitiesMap":{"1":{"universityName":"University Of Colombo"5a5"id":1}5a5
+"2":{"universityName":"University of Peradeniya"5a5"id":2}5a5
+"3":{"universityName":"University of Moratuwa"5a5"id":3}}5a5"districtZScoresMap":{"1":{"districtName":"Jaffna"5a5"id":15a5"zScore":1.5}5a5
+"2":{"districtName":"Kilinochchi"5a5"id":25a5"zScore":1.0}5a5"3":{"districtName":"Mannar"5a5"id":35a5"zScore":1.0}5a5
+"4":{"districtName":"Mullaitivu"5a5"id":45a5"zScore":1.0}5a5"5":{"districtName":"Vavuniya"5a5"id":55a5"zScore":1.0}5a5
+"6":{"districtName":"Puttalam"5a5"id":65a5"zScore":1.0}5a5"7":{"districtName":"Kurunegala"5a5"id":75a5"zScore":1.0}5a5
+"8":{"districtName":"Gampaha"5a5"id":85a5"zScore":1.0}5a5"9":{"districtName":"Colombo"5a5"id":95a5"zScore":1.0}5a5
+"10":{"districtName":"Kalutara"5a5"id":105a5"zScore":1.0}5a5"11":{"districtName":"Anuradhapura"5a5"id":115a5"zScore":1.0}5a5
+"12":{"districtName":"Polonnaruwa"5a5"id":125a5"zScore":1.0}5a5"13":{"districtName":"Matale"5a5"id":135a5"zScore":1.0}5a5
+"14":{"districtName":"Kandy"5a5"id":145a5"zScore":1.0}5a5"15":{"districtName":"NuwaraEliya"5a5"id":155a5"zScore":1.0}5a5
+"16":{"districtName":"Kegalle"5a5"id":165a5"zScore":1.0}5a5"17":{"districtName":"Ratnapura"5a5"id":175a5"zScore":1.0}5a5
+"18":{"districtName":"Trincomalee"5a5"id":185a5"zScore":1.0}5a5"19":{"districtName":"Batticaloa"5a5"id":195a5"zScore":1.0}5a5
+"20":{"districtName":"Ampara"5a5"id":205a5"zScore":1.0}5a5"21":{"districtName":"Badulla"5a5"id":215a5"zScore":1.0}5a5
+"22":{"districtName":"Monaragala"5a5"id":225a5"zScore":1.0}5a5"23":{"districtName":"Hambantota"5a5"id":235a5"zScore":1.0}5a5
+"24":{"districtName":"Matara"5a5"id":245a5"zScore":1.0}5a5"25":{"districtName":"Galle"5a5"id":255a5"zScore":1.0}}5a5"schemesMap":{"2":"ART"5a5"3":"COMMERSE"}}
+
+
+{"courseName":"Agri"5a5"offeredUniversitiesMap":{"1":{"universityName":"University Of Colombo"5a5"id":1}5a5
+"2":{"universityName":"University of Peradeniya"5a5"id":2}5a5
+"3":{"universityName":"University of Moratuwa"5a5"id":3}}5a5"districtZScoresMap":{"1":{"districtName":"Jaffna"5a5"id":15a5"zScore":2.0}5a5
+"2":{"districtName":"Kilinochchi"5a5"id":25a5"zScore":1.0}5a5"3":{"districtName":"Mannar"5a5"id":35a5"zScore":1.0}5a5
+"4":{"districtName":"Mullaitivu"5a5"id":45a5"zScore":1.0}5a5"5":{"districtName":"Vavuniya"5a5"id":55a5"zScore":1.0}5a5
+"6":{"districtName":"Puttalam"5a5"id":65a5"zScore":1.0}5a5"7":{"districtName":"Kurunegala"5a5"id":75a5"zScore":1.0}5a5
+"8":{"districtName":"Gampaha"5a5"id":85a5"zScore":1.0}5a5"9":{"districtName":"Colombo"5a5"id":95a5"zScore":1.0}5a5
+"10":{"districtName":"Kalutara"5a5"id":105a5"zScore":1.0}5a5"11":{"districtName":"Anuradhapura"5a5"id":115a5"zScore":1.0}5a5
+"12":{"districtName":"Polonnaruwa"5a5"id":125a5"zScore":1.0}5a5"13":{"districtName":"Matale"5a5"id":135a5"zScore":1.0}5a5
+"14":{"districtName":"Kandy"5a5"id":145a5"zScore":1.0}5a5"15":{"districtName":"NuwaraEliya"5a5"id":155a5"zScore":1.0}5a5
+"16":{"districtName":"Kegalle"5a5"id":165a5"zScore":1.0}5a5"17":{"districtName":"Ratnapura"5a5"id":175a5"zScore":1.0}5a5
+"18":{"districtName":"Trincomalee"5a5"id":185a5"zScore":1.0}5a5"19":{"districtName":"Batticaloa"5a5"id":195a5"zScore":1.0}5a5
+"20":{"districtName":"Ampara"5a5"id":205a5"zScore":1.0}5a5"21":{"districtName":"Badulla"5a5"id":215a5"zScore":1.0}5a5
+"22":{"districtName":"Monaragala"5a5"id":225a5"zScore":1.0}5a5"23":{"districtName":"Hambantota"5a5"id":235a5"zScore":1.0}5a5
+"24":{"districtName":"Matara"5a5"id":245a5"zScore":1.0}5a5"25":{"districtName":"Galle"5a5"id":255a5"zScore":1.0}}5a5"schemesMap":{"2":"ART"5a5"3":"SCIENCE"}}
