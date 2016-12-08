@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import courseSelection.constants.DISTRICT;
+import courseSelection.constants.SUBJECT;
 import courseSelection.gui.StudentAgentGUI;
 import courseSelection.gui.StudentGuiImp;
 import courseSelection.ontology.Course;
@@ -32,6 +33,7 @@ import jade.domain.FIPAAgentManagement.DFAgentDescription;
 import jade.domain.FIPAAgentManagement.ServiceDescription;
 import jade.lang.acl.ACLMessage;
 import jade.lang.acl.MessageTemplate;
+import sun.security.x509.X509CertInfo;
 
 public class StudentAgent extends Agent {
 
@@ -44,13 +46,27 @@ public class StudentAgent extends Agent {
 	private Ontology ontology = CourseSelectionOntology.getInstance();
 
 	public void setup() {
-
+                System.out.println("set up");
 		// Register language and ontology
 		getContentManager().registerLanguage(codec);
 		getContentManager().registerOntology(ontology);
 
 		studentGui = new StudentAgentGUI(this);
-		studentGui.showGui();
+		//studentGui.showGui();
+                
+                //testing purpose
+                StudentCourseAction sca = new StudentCourseAction();
+                Student s = new Student();
+                s.setSubject1(SUBJECT.MATHEMATICS.getName());
+                s.setSubject2(SUBJECT.MATHEMATICS.getName());
+                s.setSubject3(SUBJECT.MATHEMATICS.getName());
+                s.setDistrictId(DISTRICT.Kegalle.getId());
+                        //new Student(SUBJECT.MATHEMATICS.getName(), SUBJECT.PHYSICS.getName(), 
+                                //SUBJECT.CHEMISTRY.getName(), SUBJECT.OL_ENGLISH.getName(), SUBJECT.OL_MATHS.getName(), 
+                                //(float) 1.23, DISTRICT.Kegalle.getId());//
+                sca.setStudent(s);
+                sca.setCourse(new Course());
+                sendInformationToCourseAgent(sca);
 	}
 
 	protected void takeDown() {
@@ -110,8 +126,10 @@ public class StudentAgent extends Agent {
 		public void action() {
 			switch (step) {
 			case 0:
-
+                                System.out.println("Student request preformaer action");
 				for (int i = 0; i < courseAgents.length; i++) {
+                                        System.out.println("send messeage to agent");
+                                        System.out.println(studentCourseAction.getStudent().getSubject1());
 					sendMessage(ACLMessage.REQUEST, studentCourseAction, courseAgents[i]);
 				}
 				step = 1;
@@ -163,7 +181,7 @@ public class StudentAgent extends Agent {
 		}
 	}
 
-	private void sendMessage(int performative, AgentAction action, AID aid) {
+	private synchronized void sendMessage(int performative, AgentAction action, AID aid) {
 		ACLMessage msg = new ACLMessage(performative);
 		msg.setLanguage(codec.getName());
 		msg.setOntology(ontology.getName());

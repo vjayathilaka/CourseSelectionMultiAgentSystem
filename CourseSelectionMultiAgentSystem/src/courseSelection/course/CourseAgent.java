@@ -4,7 +4,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Hashtable;
-import java.util.List;
+import java.util.List; 
 import java.util.Map;
 
 import org.codehaus.jackson.JsonGenerationException;
@@ -185,9 +185,14 @@ public class CourseAgent extends Agent {
 		}
 	}
 	
-	private void processStudentData(ACLMessage message, Action action, Agent agent) {
+	private synchronized void processStudentData(ACLMessage message, Action action, Agent agent) {
 		StudentCourseAction studentCourseAction = (StudentCourseAction) action.getAction();
 		Student student = studentCourseAction.getStudent();
+                
+                System.out.println("processed student data");
+                System.out.println(student.getSubject1());
+                System.out.println(student.getSubject2());
+                System.out.println(student.getSubject3());
 		
 		ResultProcessor processor = new ResultProcessor(offeredUniversitiesMap, districtZScoresMap, schemesMap);
                 
@@ -215,7 +220,7 @@ public class CourseAgent extends Agent {
 		}
 	}
 
-	private void sendReplyMessage(int performatice, ACLMessage message, Action action, Agent agent) {
+	private synchronized void sendReplyMessage(int performatice, ACLMessage message, Action action, Agent agent) {
 		ACLMessage reply = message.createReply();
 		reply.setPerformative(performatice);
 

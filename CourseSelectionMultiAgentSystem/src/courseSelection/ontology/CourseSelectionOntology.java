@@ -15,16 +15,22 @@ public class CourseSelectionOntology extends Ontology{
 	
 	public static final String STUDENT = "Student";
 	public static final String STUDENT_NAME = "name";
-	public static final String STUDENT_ZSCORE = "zScore";
-	public static final String STUDENT_DISTRICT_ID = "districtId";
 	public static final String STUDENT_SCHEME_ID = "schemeId";
+        
+        public static final String SUBJECT1 = "subject1";
+        public static final String SUBJECT2 = "subject2";
+        public static final String SUBJECT3 = "subject3";
+        public static final String OL_ENGLISH = "oLEnglish";
+        public static final String OL_MATHS = "oLMaths";
+        public static final String STUDENT_ZSCORE = "zScore";
+	public static final String STUDENT_DISTRICT_ID = "districtId";
 	
 	public static final String COURSE = "Course";
 	public static final String ID = "id";
 	public static final String COURSE_NAME = "courseName";
 	public static final String COURSE_ZSCORE = "zScore";
 	public static final String COURSE_ZSCORE_DIFF = "zScoreDiff";
-	
+                
 	public static final String STUDENT_COURSE = "StudentCourseAction";
 	public static final String STUDENT_COURSE_STUDENT = "student";
 	public static final String STUDENT_COURSE_COURSE = "course";
@@ -51,6 +57,12 @@ public class CourseSelectionOntology extends Ontology{
 	    	cs.add(STUDENT_ZSCORE, (PrimitiveSchema)getSchema(BasicOntology.FLOAT), ObjectSchema.OPTIONAL);
 	    	cs.add(STUDENT_DISTRICT_ID, (PrimitiveSchema)getSchema(BasicOntology.INTEGER), ObjectSchema.OPTIONAL);
 	    	cs.add(STUDENT_SCHEME_ID, (PrimitiveSchema)getSchema(BasicOntology.INTEGER), ObjectSchema.OPTIONAL);
+                
+                cs.add(SUBJECT1, (PrimitiveSchema)getSchema(BasicOntology.STRING), ObjectSchema.OPTIONAL);
+                cs.add(SUBJECT2, (PrimitiveSchema)getSchema(BasicOntology.STRING), ObjectSchema.OPTIONAL);
+                cs.add(SUBJECT3, (PrimitiveSchema)getSchema(BasicOntology.STRING), ObjectSchema.OPTIONAL);
+                cs.add(OL_ENGLISH, (PrimitiveSchema)getSchema(BasicOntology.STRING), ObjectSchema.OPTIONAL);
+                cs.add(OL_MATHS, (PrimitiveSchema)getSchema(BasicOntology.STRING), ObjectSchema.OPTIONAL);
 	    	
 	    	cs = (ConceptSchema)getSchema(COURSE);
 	    	cs.add(ID, (PrimitiveSchema)getSchema(BasicOntology.INTEGER), ObjectSchema.OPTIONAL);

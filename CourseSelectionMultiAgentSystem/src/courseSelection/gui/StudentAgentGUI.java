@@ -12,6 +12,7 @@ import javax.swing.table.DefaultTableModel;
 
 import courseSelection.constants.DISTRICT;
 import courseSelection.constants.SCHEME;
+import courseSelection.constants.SUBJECT;
 import courseSelection.ontology.Course;
 import courseSelection.ontology.Student;
 import courseSelection.ontology.StudentCourseAction;
@@ -358,6 +359,7 @@ public class StudentAgentGUI extends javax.swing.JFrame {
         int districtId = selectedDistrict.getId();
         
         Student s = new Student();
+
         s.setName(sName);
         s.setDistrictId(districtId);
         s.setSchemeId(schemeId);
