@@ -40,6 +40,7 @@ import jade.domain.FIPAAgentManagement.DFAgentDescription;
 import jade.domain.FIPAAgentManagement.ServiceDescription;
 import jade.lang.acl.ACLMessage;
 import jade.lang.acl.MessageTemplate;
+import java.util.ArrayList;
 
 public class CourseAgent extends Agent {
 
@@ -199,12 +200,24 @@ public class CourseAgent extends Agent {
                 float districtZscore = districtZScoresMap.get(student.getDistrictId()).getzScore();
                 float diff = student.getzScore() - districtZscore;
                 
-		if(diff >=0 && schemesMap.containsKey(student.getSchemeId())) {
+		if(true){//diff >=0 && schemesMap.containsKey(student.getSchemeId())) {
 			Course c = studentCourseAction.getCourse();
 			c.setCourseName(courseName);
 			c.setId(1);
 			c.setzScoreDiff(processor.getZScoreDiffWithPastZScore(student.getDistrictId(), student.getzScore()));
 			c.setzScore(processor.getPreviousZScore(student.getDistrictId()));
+                        List universities = new ArrayList();
+                        University u1 = new University();
+                        u1.setId(1);
+                        u1.setUniversityName("Peradeniya");
+                        universities.add(u1);
+                        University u2 = new University();
+                        u2.setId(2);
+                        u2.setUniversityName("Colombo");
+                        universities.add(u2);
+                        
+                        c.setUniversities(universities);
+                        
 			
 			sendReplyMessage(ACLMessage.INFORM, message, action, agent);
 		} /*else if(processor.machWithSchem(student.getSchemeId())){

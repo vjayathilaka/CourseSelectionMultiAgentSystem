@@ -11,6 +11,7 @@ import courseSelection.ontology.Course;
 import courseSelection.ontology.CourseSelectionOntology;
 import courseSelection.ontology.Student;
 import courseSelection.ontology.StudentCourseAction;
+import courseSelection.ontology.University;
 import jade.content.AgentAction;
 import jade.content.Concept;
 import jade.content.ContentElement;
@@ -65,7 +66,28 @@ public class StudentAgent extends Agent {
                                 //SUBJECT.CHEMISTRY.getName(), SUBJECT.OL_ENGLISH.getName(), SUBJECT.OL_MATHS.getName(), 
                                 //(float) 1.23, DISTRICT.Kegalle.getId());//
                 sca.setStudent(s);
-                sca.setCourse(new Course());
+                Course c = new Course();
+                c.setId(1);
+                List list1 = new ArrayList();
+                University u1 = new University();
+                u1.setId(1);
+                u1.setUniversityName("Pera");
+                list1.add(u1);
+                
+                University u2 = new University();
+                u2.setId(2);
+                u2.setUniversityName("col");
+                list1.add(u2);
+                
+                                University u3 = new University();
+                u3.setId(3);
+                u3.setUniversityName("col");
+                list1.add(u3);
+                
+                System.out.println("befor set uni");
+                c.setUniversities(list1);
+                System.out.println("after set uni");
+                sca.setCourse(c);
                 sendInformationToCourseAgent(sca);
 	}
 
@@ -143,6 +165,16 @@ public class StudentAgent extends Agent {
 
 						switch (reply.getPerformative()) {
 							case (ACLMessage.INFORM):
+                                                        //TO-DO
+                                                            Course c = action.getCourse();
+                                                            List universities = c.getUniversities();
+                                                            University us1 = (University) universities.get(0);
+                                                            System.out.println(us1.getUniversityName());
+                                                            
+                                                            University us2 = (University) universities.get(1);
+                                                            System.out.println(us2.getUniversityName());
+                                                            
+ 
 					        	courses.add(action.getCourse());
 								break;
 							case (ACLMessage.REFUSE):

@@ -1,10 +1,7 @@
 package courseSelection.ontology;
 
-import java.util.List;
-import java.util.Map;
-
-import courseSelection.constants.UNIVERSITY;
 import jade.content.Concept;
+import java.util.List;
 
 public class Course implements Concept{
 	
@@ -12,7 +9,7 @@ public class Course implements Concept{
 	private String courseName;
 	private float zScore;
 	private float zScoreDiff;
-	//private Map<University, List<Integer>> universityStatus;
+	private List universities;
 	
 	public int getId() {
 		return id;
@@ -26,12 +23,6 @@ public class Course implements Concept{
 	public void setCourseName(String courseName) {
 		this.courseName = courseName;
 	}
-/*	public Map<University, List<Integer>> getUniversityStatus() {
-		return universityStatus;
-	}
-	public void setUniversityStatus(Map<University, List<Integer>> universityStatus) {
-		this.universityStatus = universityStatus;
-	}*/
 	public float getzScore() {
 		return zScore;
 	}
@@ -44,6 +35,14 @@ public class Course implements Concept{
 	public void setzScoreDiff(float zScoreDiff) {
 		this.zScoreDiff = zScoreDiff;
 	}
+
+    public List getUniversities() {
+        return universities;
+    }
+
+    public void setUniversities(List universities) {
+        this.universities = universities;
+    }
 	
 	
 }
