@@ -71,7 +71,7 @@ public class StudentGuiImp extends JFrame{
 					String studentGpa = gpa.getText().trim();
 					
 					Student student = new Student();
-					student.setName(studentName);
+					//student.setName(studentName);
 					student.setzScore(Integer.parseInt(studentGpa));
 					student.setDistrictId(DISTRICT.Kegalle.getId());
 					student.setSchemeId(SCHEME.ART.getId());
@@ -85,7 +85,7 @@ public class StudentGuiImp extends JFrame{
 					studentCourseAction.setCourse(course);
 
 					//myAgent.updateCatalogue(title, Integer.parseInt(price));
-					studentAgent.sendInformationToCourseAgent(studentCourseAction);
+					//studentAgent.sendInformationToCourseAgent(studentCourseAction);
 					name.setText("");
 					gpa.setText("");
 				}

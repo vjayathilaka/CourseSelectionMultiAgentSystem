@@ -4,8 +4,8 @@ public class MainProcess {
     
     public static void main(String args[]) {
         
-        CourseAgentsCreation cac = new CourseAgentsCreation();
-        cac.createCourceAgents();
+        AgentsCreation cac = new AgentsCreation();      
+        cac.createAgents();
         
     }
     

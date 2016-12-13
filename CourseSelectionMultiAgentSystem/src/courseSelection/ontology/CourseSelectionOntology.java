@@ -14,7 +14,6 @@ public class CourseSelectionOntology extends Ontology{
 	public static final String ONTOLOGY_NAME = "CouseSelection-ontology";
 	
 	public static final String STUDENT = "Student";
-	public static final String STUDENT_NAME = "name";
 	public static final String STUDENT_SCHEME_ID = "schemeId";
         
         public static final String SUBJECT1 = "subject1";
@@ -31,6 +30,9 @@ public class CourseSelectionOntology extends Ontology{
 	public static final String COURSE_ZSCORE = "zScore";
 	public static final String COURSE_ZSCORE_DIFF = "zScoreDiff";
         public static final String COURSE_UNIVERSITIES = "universities";
+        public static final String COURSE_OL_ENGLISH = "olEnglish";
+        public static final String COURSE_OL_MATHS = "olMaths";
+        public static final String COURSE_PROPOSED_INTAKE = "proposedIntake";
                 
 	public static final String STUDENT_COURSE = "StudentCourseAction";
 	public static final String STUDENT_COURSE_STUDENT = "student";
@@ -54,32 +56,34 @@ public class CourseSelectionOntology extends Ontology{
 		try {
 			add(new ConceptSchema(STUDENT), Student.class);
 			add(new ConceptSchema(COURSE), Course.class);
-                        add(new ConceptSchema(UNIVERSITY), University.class);
+                        //add(new ConceptSchema(UNIVERSITY), University.class);
 			add(new AgentActionSchema(STUDENT_COURSE), StudentCourseAction.class);
 			
 			// Structure of the schema for the Book concept
 			ConceptSchema cs = (ConceptSchema) getSchema(STUDENT);
-	    	cs.add(STUDENT_NAME, (PrimitiveSchema)getSchema(BasicOntology.STRING), ObjectSchema.OPTIONAL);
 	    	cs.add(STUDENT_ZSCORE, (PrimitiveSchema)getSchema(BasicOntology.FLOAT), ObjectSchema.OPTIONAL);
 	    	cs.add(STUDENT_DISTRICT_ID, (PrimitiveSchema)getSchema(BasicOntology.INTEGER), ObjectSchema.OPTIONAL);
 	    	cs.add(STUDENT_SCHEME_ID, (PrimitiveSchema)getSchema(BasicOntology.INTEGER), ObjectSchema.OPTIONAL);
                 
-                cs.add(SUBJECT1, (PrimitiveSchema)getSchema(BasicOntology.STRING), ObjectSchema.OPTIONAL);
-                cs.add(SUBJECT2, (PrimitiveSchema)getSchema(BasicOntology.STRING), ObjectSchema.OPTIONAL);
-                cs.add(SUBJECT3, (PrimitiveSchema)getSchema(BasicOntology.STRING), ObjectSchema.OPTIONAL);
+                cs.add(SUBJECT1, (PrimitiveSchema)getSchema(BasicOntology.INTEGER), ObjectSchema.OPTIONAL);
+                cs.add(SUBJECT2, (PrimitiveSchema)getSchema(BasicOntology.INTEGER), ObjectSchema.OPTIONAL);
+                cs.add(SUBJECT3, (PrimitiveSchema)getSchema(BasicOntology.INTEGER), ObjectSchema.OPTIONAL);
                 cs.add(OL_ENGLISH, (PrimitiveSchema)getSchema(BasicOntology.STRING), ObjectSchema.OPTIONAL);
                 cs.add(OL_MATHS, (PrimitiveSchema)getSchema(BasicOntology.STRING), ObjectSchema.OPTIONAL);
                 
-                cs = (ConceptSchema)getSchema(UNIVERSITY);
-                cs.add(UNIVERSITY_ID, (PrimitiveSchema)getSchema(BasicOntology.INTEGER), ObjectSchema.OPTIONAL);
-                cs.add(UNIVERSITY_NAME, (PrimitiveSchema)getSchema(BasicOntology.STRING), ObjectSchema.OPTIONAL);
+                //cs = (ConceptSchema)getSchema(UNIVERSITY);
+                //cs.add(UNIVERSITY_ID, (PrimitiveSchema)getSchema(BasicOntology.INTEGER), ObjectSchema.OPTIONAL);
+                //cs.add(UNIVERSITY_NAME, (PrimitiveSchema)getSchema(BasicOntology.STRING), ObjectSchema.OPTIONAL);
 	    	
 	    	cs = (ConceptSchema)getSchema(COURSE);
 	    	cs.add(ID, (PrimitiveSchema)getSchema(BasicOntology.INTEGER), ObjectSchema.OPTIONAL);
 	    	cs.add(COURSE_NAME, (PrimitiveSchema)getSchema(BasicOntology.STRING), ObjectSchema.OPTIONAL);
 	    	cs.add(COURSE_ZSCORE, (PrimitiveSchema)getSchema(BasicOntology.FLOAT), ObjectSchema.OPTIONAL);
 	    	cs.add(COURSE_ZSCORE_DIFF, (PrimitiveSchema)getSchema(BasicOntology.FLOAT), ObjectSchema.OPTIONAL);
-                cs.add(COURSE_UNIVERSITIES, (ConceptSchema) getSchema(UNIVERSITY), 1, ObjectSchema.UNLIMITED);
+                cs.add(COURSE_UNIVERSITIES, (PrimitiveSchema) getSchema(BasicOntology.INTEGER), 1, ObjectSchema.UNLIMITED);
+                cs.add(COURSE_OL_ENGLISH, (PrimitiveSchema)getSchema(BasicOntology.STRING), ObjectSchema.OPTIONAL);
+                cs.add(COURSE_OL_MATHS, (PrimitiveSchema)getSchema(BasicOntology.STRING), ObjectSchema.OPTIONAL);
+                cs.add(COURSE_PROPOSED_INTAKE, (PrimitiveSchema)getSchema(BasicOntology.INTEGER), ObjectSchema.OPTIONAL);
 	    	
 			AgentActionSchema as = (AgentActionSchema)getSchema(STUDENT_COURSE);
 			as.add(STUDENT_COURSE_STUDENT, (ConceptSchema)getSchema(STUDENT));

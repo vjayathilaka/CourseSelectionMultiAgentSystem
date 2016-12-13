@@ -360,7 +360,7 @@ public class StudentAgentGUI extends javax.swing.JFrame {
         
         Student s = new Student();
 
-        s.setName(sName);
+        //s.setName(sName);
         s.setDistrictId(districtId);
         s.setSchemeId(schemeId);
         s.setzScore(zS);
@@ -374,7 +374,7 @@ public class StudentAgentGUI extends javax.swing.JFrame {
         sca.setStudent(s);
         sca.setCourse(c);
         
-        agent.sendInformationToCourseAgent(sca);
+        //agent.sendInformationToCourseAgent(sca);
         
 
     }//GEN-LAST:event_okButtonActionPerformed

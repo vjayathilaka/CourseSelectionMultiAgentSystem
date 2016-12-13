@@ -6,6 +6,7 @@ import java.util.List;
 import courseSelection.constants.DISTRICT;
 import courseSelection.constants.SUBJECT;
 import courseSelection.gui.StudentAgentGUI;
+import courseSelection.gui.StudentGui;
 import courseSelection.gui.StudentGuiImp;
 import courseSelection.ontology.Course;
 import courseSelection.ontology.CourseSelectionOntology;
@@ -39,7 +40,7 @@ import sun.security.x509.X509CertInfo;
 public class StudentAgent extends Agent {
 
 	private static final long serialVersionUID = 1L;
-	private StudentAgentGUI studentGui;
+	private StudentGui studentGui;
 	private AID[] courseAgents;
 	private StudentCourseAction studentCourseAction;
 
@@ -52,43 +53,8 @@ public class StudentAgent extends Agent {
 		getContentManager().registerLanguage(codec);
 		getContentManager().registerOntology(ontology);
 
-		studentGui = new StudentAgentGUI(this);
-		//studentGui.showGui();
-                
-                //testing purpose
-                StudentCourseAction sca = new StudentCourseAction();
-                Student s = new Student();
-                s.setSubject1(SUBJECT.MATHEMATICS.getName());
-                s.setSubject2(SUBJECT.MATHEMATICS.getName());
-                s.setSubject3(SUBJECT.MATHEMATICS.getName());
-                s.setDistrictId(DISTRICT.Kegalle.getId());
-                        //new Student(SUBJECT.MATHEMATICS.getName(), SUBJECT.PHYSICS.getName(), 
-                                //SUBJECT.CHEMISTRY.getName(), SUBJECT.OL_ENGLISH.getName(), SUBJECT.OL_MATHS.getName(), 
-                                //(float) 1.23, DISTRICT.Kegalle.getId());//
-                sca.setStudent(s);
-                Course c = new Course();
-                c.setId(1);
-                List list1 = new ArrayList();
-                University u1 = new University();
-                u1.setId(1);
-                u1.setUniversityName("Pera");
-                list1.add(u1);
-                
-                University u2 = new University();
-                u2.setId(2);
-                u2.setUniversityName("col");
-                list1.add(u2);
-                
-                                University u3 = new University();
-                u3.setId(3);
-                u3.setUniversityName("col");
-                list1.add(u3);
-                
-                System.out.println("befor set uni");
-                c.setUniversities(list1);
-                System.out.println("after set uni");
-                sca.setCourse(c);
-                sendInformationToCourseAgent(sca);
+		studentGui = new StudentGui(this);
+		studentGui.showGui();
 	}
 
 	protected void takeDown() {
@@ -104,7 +70,22 @@ public class StudentAgent extends Agent {
 
 	}
 
-	public void sendInformationToCourseAgent(StudentCourseAction sca) {
+	public void sendInformationToCourseAgent(int sub1Id, int sub2Id, int sub3Id, int schemaId, int districtId, float zScore) {                StudentCourseAction sca = new StudentCourseAction();
+                Student s = new Student();
+               s.setSubject1(sub1Id);
+               s.setSubject2(sub2Id);
+               s.setSubject3(sub3Id);
+                s.setDistrictId(districtId);
+                s.setSchemeId(schemaId);
+                s.setzScore(zScore);
+                sca.setStudent(s);
+                
+                Course c = new Course();
+                c.setId(1);
+                List list1 = new ArrayList();
+                list1.add(1);
+                c.setUniversities(list1);
+                sca.setCourse(c);
 		this.studentCourseAction = sca;
 		addBehaviour(new CourseInfomationHandler());
 	}
@@ -165,17 +146,7 @@ public class StudentAgent extends Agent {
 
 						switch (reply.getPerformative()) {
 							case (ACLMessage.INFORM):
-                                                        //TO-DO
-                                                            Course c = action.getCourse();
-                                                            List universities = c.getUniversities();
-                                                            University us1 = (University) universities.get(0);
-                                                            System.out.println(us1.getUniversityName());
-                                                            
-                                                            University us2 = (University) universities.get(1);
-                                                            System.out.println(us2.getUniversityName());
-                                                            
- 
-					        	courses.add(action.getCourse());
+					        	courses.add((Course)action.getCourse());
 								break;
 							case (ACLMessage.REFUSE):
 								rejectCourses.add(action.getCourse());
@@ -194,9 +165,9 @@ public class StudentAgent extends Agent {
 					if (repliesCnt >= courseAgents.length) {
 						// We received all replies
 						if(courses.size() > 0){
-							studentGui.populateEligibleResultTable(courses, rejectCourses);
+							studentGui.updateStudentGUI(courses);
 						} else {
-							studentGui.populateTableWithInfo("You are not eligible for any course");
+							//studentGui.populateTableWithInfo("You are not eligible for any course");
 						}
 						step = 2;
 					}

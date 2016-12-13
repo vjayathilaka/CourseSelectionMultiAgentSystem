@@ -13,7 +13,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CourseAgentsCreation {
+public class AgentsCreation {
     
   // JDBC driver name and database URL
    static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";  
@@ -23,7 +23,7 @@ public class CourseAgentsCreation {
    static final String USER = "root";
    static final String PASS = "";
    
-    public void createCourceAgents() {
+    public void createAgents() {
         jade.core.Runtime rt = jade.core.Runtime.instance();
         
         Profile p = new ProfileImpl();
@@ -49,16 +49,19 @@ public class CourseAgentsCreation {
                   int id  = rs.getInt("course_id");
                   int isEnglishCom = rs.getInt("english");
                   int isMathsCom = rs.getInt("maths");
+                  int proposedIntake = rs.getInt("proposed_intake");
                   String courseName = rs.getString("course_name");
                   ArrayList<ArrayList<SubjectCombination>> subjectsLists = getSubjectLists(conn, id);
                   List<Integer> offierdUniversities = getOfferedUniIds(conn, id);
                   
-                  Object[] argumentsToAgent = {courseName, subjectsLists, offierdUniversities, new Integer(isEnglishCom), new Integer(isMathsCom)};
+                  Object[] argumentsToAgent = {courseName, subjectsLists, offierdUniversities, new Integer(isEnglishCom), new Integer(isMathsCom), new Integer(proposedIntake), new Integer(id)};
                   
                   ac = cc.createNewAgent(courseName , "courseSelection.course.CourseAgent", argumentsToAgent);
                   ac.start();
 
                }
+                  ac = cc.createNewAgent("studentAgent" , "courseSelection.student.StudentAgent", null);
+                  ac.start();
                rs.close();
             }catch(SQLException se){
                //Handle errors for JDBC

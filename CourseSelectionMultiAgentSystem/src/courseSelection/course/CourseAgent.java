@@ -55,14 +55,13 @@ public class CourseAgent extends Agent {
 	private Codec codec = new SLCodec();
 	private Ontology ontology = CourseSelectionOntology.getInstance();
 
+        private int courseId;
 	private String courseName;
         private ArrayList<ArrayList<SubjectCombination>> courseList;
-	private List<Integer> offeredUniversities;
+	private List offeredUniversities;
         private int isEnglishComp;
         private int isMathsComp;
-        
-	private Map<Integer, District> districtZScoresMap;
-	private Map<Integer, SCHEME> schemesMap;
+        private int proposedIntake;
 
 	protected void setup() {
 
@@ -74,9 +73,11 @@ public class CourseAgent extends Agent {
                 
                 courseName = (String) argumentsOfAgent[0];
                 courseList = (ArrayList<ArrayList<SubjectCombination>>) argumentsOfAgent[1];
-                offeredUniversities = (List<Integer>) argumentsOfAgent[2];
+                offeredUniversities = (List) argumentsOfAgent[2];
                 isEnglishComp = (int) argumentsOfAgent[3];
                 isMathsComp = (int) argumentsOfAgent[4];
+                proposedIntake = (int) argumentsOfAgent[5];
+                courseId = (int) argumentsOfAgent[6];
 
 		// Register the Course agent service in the yellow pages
 		DFAgentDescription dfd = new DFAgentDescription();
@@ -114,7 +115,7 @@ public class CourseAgent extends Agent {
 				ContentManager cm = myAgent.getContentManager();
 				try {
 					Action act = (Action) cm.extractContent(msg);
-					//StudentCourseAction scAction = (StudentCourseAction) act.getAction();
+					StudentCourseAction scAction = (StudentCourseAction) act.getAction();
 					processStudentData(msg, act, myAgent);
 
 				} catch (CodecException | OntologyException e) {
@@ -130,34 +131,17 @@ public class CourseAgent extends Agent {
 	private synchronized void processStudentData(ACLMessage message, Action action, Agent agent) {
 		StudentCourseAction studentCourseAction = (StudentCourseAction) action.getAction();
 		Student student = studentCourseAction.getStudent();
-                
-                System.out.println("processed student data");
-                System.out.println(student.getSubject1());
-                System.out.println(student.getSubject2());
-                System.out.println(student.getSubject3());
-		
-		//ResultProcessor processor = new ResultProcessor(offeredUniversities, districtZScoresMap, schemesMap);
-                
-                float districtZscore = districtZScoresMap.get(student.getDistrictId()).getzScore();
-                float diff = student.getzScore() - districtZscore;
-                
+
 		if(true){//diff >=0 && schemesMap.containsKey(student.getSchemeId())) {
 			Course c = studentCourseAction.getCourse();
 			c.setCourseName(courseName);
 			c.setId(1);
-			//c.setzScoreDiff(processor.getZScoreDiffWithPastZScore(student.getDistrictId(), student.getzScore()));
-			//c.setzScore(processor.getPreviousZScore(student.getDistrictId()));
-                        List universities = new ArrayList();
-                        University u1 = new University();
-                        u1.setId(1);
-                        u1.setUniversityName("Peradeniya");
-                        universities.add(u1);
-                        University u2 = new University();
-                        u2.setId(2);
-                        u2.setUniversityName("Colombo");
-                        universities.add(u2);
-                        
-                        c.setUniversities(universities);
+                        c.setUniversities(offeredUniversities);
+                        c.setProposedIntake(proposedIntake);
+                        if(isMathsComp == 1)
+                            c.setOlMaths("C");
+                        if(isEnglishComp == 1)
+                            c.setOlEnglish("C");
                         
 			
 			sendReplyMessage(ACLMessage.INFORM, message, action, agent);

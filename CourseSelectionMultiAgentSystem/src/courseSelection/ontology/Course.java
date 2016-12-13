@@ -10,6 +10,10 @@ public class Course implements Concept{
 	private float zScore;
 	private float zScoreDiff;
 	private List universities;
+        private String olEnglish;
+        private String olMaths;
+        private int proposedIntake;
+        
 	
 	public int getId() {
 		return id;
@@ -43,6 +47,30 @@ public class Course implements Concept{
     public void setUniversities(List universities) {
         this.universities = universities;
     }
+
+    public String getOlEnglish() {
+        return olEnglish;
+    }
+
+    public void setOlEnglish(String olEnglish) {
+        this.olEnglish = olEnglish;
+    }
+
+    public String getOlMaths() {
+        return olMaths;
+    }
+
+    public void setOlMaths(String olMaths) {
+        this.olMaths = olMaths;
+    }
+
+    public int getProposedIntake() {
+        return proposedIntake;
+    }
+
+    public void setProposedIntake(int proposedIntake) {
+        this.proposedIntake = proposedIntake;
+    }
 	
-	
+    
 }
