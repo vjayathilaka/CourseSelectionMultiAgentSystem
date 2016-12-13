@@ -839,7 +839,7 @@ public class CourseSelectionDialog extends javax.swing.JFrame {
         	schemeMap.put(sEnum.getId(), sEnum);
         }
         
-        agent.updateCourseAgent(courseName, universityMap, districtMap, schemeMap);
+        //agent.updateCourseAgent(courseName, universityMap, districtMap, schemeMap);
         
     }//GEN-LAST:event_btn_addActionPerformed
     

@@ -75,7 +75,7 @@ public class CourseGuiImp extends JFrame{
 					Map<Integer, SCHEME> schemeMap = new HashMap<>();
 					schemeMap.put(SCHEME.ART.getId(), SCHEME.ART);
 
-					courseAgent.updateCourseAgent(cName, uniMap, disMap, schemeMap);
+					//courseAgent.updateCourseAgent(cName, uniMap, disMap, schemeMap);
 					
 					courseName.setText("");
 					lastYearCutOffGPA.setText("");

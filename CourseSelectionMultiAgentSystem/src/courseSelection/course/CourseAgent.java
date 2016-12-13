@@ -1,5 +1,6 @@
 package courseSelection.course;
 
+import courseSelection.agentCreation.SubjectCombination;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.HashMap;
@@ -55,11 +56,13 @@ public class CourseAgent extends Agent {
 	private Ontology ontology = CourseSelectionOntology.getInstance();
 
 	private String courseName;
-	private Map<Integer, University> offeredUniversitiesMap;
+        private ArrayList<ArrayList<SubjectCombination>> courseList;
+	private List<Integer> offeredUniversities;
+        private int isEnglishComp;
+        private int isMathsComp;
+        
 	private Map<Integer, District> districtZScoresMap;
 	private Map<Integer, SCHEME> schemesMap;
-	
-	private boolean argumentMoode = false;
 
 	protected void setup() {
 
@@ -67,28 +70,15 @@ public class CourseAgent extends Agent {
 		getContentManager().registerLanguage(codec);
 		getContentManager().registerOntology(ontology);
 
-		catalogue = new Hashtable<>();
-		offeredUniversitiesMap = new HashMap<>();
-		districtZScoresMap = new HashMap<>();
-		schemesMap = new HashMap<>();
+                Object[] argumentsOfAgent = getArguments();
+                
+                courseName = (String) argumentsOfAgent[0];
+                courseList = (ArrayList<ArrayList<SubjectCombination>>) argumentsOfAgent[1];
+                offeredUniversities = (List<Integer>) argumentsOfAgent[2];
+                isEnglishComp = (int) argumentsOfAgent[3];
+                isMathsComp = (int) argumentsOfAgent[4];
 
-		Object[] args = getArguments();
-		// Create and show the GUI
-		String dataval = "";
-		if(args != null && args.length > 0) {
-			for(int i=0; i<args.length; i++){
-				dataval = dataval + args[i];
-			}
-
-			setArgumentDataToTheAgent(dataval);
-			argumentMoode = true;
-		} else {
-			courseGui = new CourseSelectionDialog(this);
-			courseGui.showGui();
-		}
-
-
-		// Register the book-selling service in the yellow pages
+		// Register the Course agent service in the yellow pages
 		DFAgentDescription dfd = new DFAgentDescription();
 		dfd.setName(getAID());
 		ServiceDescription sd = new ServiceDescription();
@@ -101,35 +91,9 @@ public class CourseAgent extends Agent {
 			fe.printStackTrace();
 		}
 
-		// Add the behaviour serving queries from buyer agents
+		// Add the behaviour serving queries from student agents
 		addBehaviour(new OfferRequestsServer());
-
-		// Add the behaviour serving purchase orders from buyer agents
-		// addBehaviour(new PurchaseOrdersServer());
-	}
-	
-	private void setArgumentDataToTheAgent(String jsonArgument) {
-		ObjectMapper mapper = new ObjectMapper();
-		try {
-			jsonArgument = jsonArgument.replaceAll("5a5", ",");
-			CourseDetails courseDetails = mapper.readValue(jsonArgument, CourseDetails.class);
-
-			courseName = courseDetails.getCourseName();
-			offeredUniversitiesMap = courseDetails.getOfferedUniversitiesMap();
-			districtZScoresMap = courseDetails.getDistrictZScoresMap();
-			schemesMap = courseDetails.getSchemesMap();
-			
-		} catch (JsonParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (JsonMappingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
+        }
 
 	// Put agent clean-up operations here
 	protected void takeDown() {
@@ -139,30 +103,7 @@ public class CourseAgent extends Agent {
 		} catch (FIPAException fe) {
 			fe.printStackTrace();
 		}
-		// Close the GUI
-		if(argumentMoode)
-			courseGui.dispose();
-		// Printout a dismissal message
 		System.out.println("Course agent " + getAID().getName() + " terminating.");
-	}
-
-	/**
-	 * This is invoked by the GUI when the user adds a new book for sale
-	 */
-	public void updateCourseAgent(final String cName, final Map<Integer, University> universitiesMap,
-			final Map<Integer, District> districtMap, final Map<Integer, SCHEME> sMap) {
-		addBehaviour(new OneShotBehaviour() {
-			public void action() {
-				System.out.println("cname is " + cName);
-				courseName = cName;
-				offeredUniversitiesMap = universitiesMap;
-				districtZScoresMap = districtMap;
-				schemesMap = sMap;
-
-				System.out.println("Agent updated with values-->");
-
-			}
-		});
 	}
 
 	private class OfferRequestsServer extends CyclicBehaviour {
@@ -195,7 +136,7 @@ public class CourseAgent extends Agent {
                 System.out.println(student.getSubject2());
                 System.out.println(student.getSubject3());
 		
-		ResultProcessor processor = new ResultProcessor(offeredUniversitiesMap, districtZScoresMap, schemesMap);
+		//ResultProcessor processor = new ResultProcessor(offeredUniversities, districtZScoresMap, schemesMap);
                 
                 float districtZscore = districtZScoresMap.get(student.getDistrictId()).getzScore();
                 float diff = student.getzScore() - districtZscore;
@@ -204,8 +145,8 @@ public class CourseAgent extends Agent {
 			Course c = studentCourseAction.getCourse();
 			c.setCourseName(courseName);
 			c.setId(1);
-			c.setzScoreDiff(processor.getZScoreDiffWithPastZScore(student.getDistrictId(), student.getzScore()));
-			c.setzScore(processor.getPreviousZScore(student.getDistrictId()));
+			//c.setzScoreDiff(processor.getZScoreDiffWithPastZScore(student.getDistrictId(), student.getzScore()));
+			//c.setzScore(processor.getPreviousZScore(student.getDistrictId()));
                         List universities = new ArrayList();
                         University u1 = new University();
                         u1.setId(1);

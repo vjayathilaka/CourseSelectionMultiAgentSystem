@@ -1,52 +1,166 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+ package courseSelection.agentCreation;
 
-package courseSelection.agentCreation;
-
+import courseSelection.coursegui.OfferedUniversity;
+import jade.core.Profile;
+import jade.core.ProfileImpl;
+import jade.wrapper.AgentController;
+import jade.wrapper.ContainerController;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 
-/**
- *
- * @author Hiranthi
- */
 public class CourseAgentsCreation {
     
-    public static void main(String args[]) {
+  // JDBC driver name and database URL
+   static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";  
+   static final String DB_URL = "jdbc:mysql://localhost/courseselection";
+
+   //  Database credentials
+   static final String USER = "root";
+   static final String PASS = "";
+   
+    public void createCourceAgents() {
+        jade.core.Runtime rt = jade.core.Runtime.instance();
         
-        System.out.println("-------- MySQL JDBC Connection Testing ------------");
-
-	try {
-		Class.forName("com.mysql.jdbc.Driver");
-	} catch (ClassNotFoundException e) {
-		System.out.println("Where is your MySQL JDBC Driver?");
-		e.printStackTrace();
-		return;
-	}
-
-	System.out.println("MySQL JDBC Driver Registered!");
-	       Connection connection = null;
-
-	try {
-		connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/courseselection","root", "");
-
-	} catch (SQLException e) {
-		System.out.println("Connection Failed! Check output console");
-		e.printStackTrace();
-		return;
-	}
-
-	if (connection != null) {
-		System.out.println("You made it, take control your database now!");
-	} else {
-		System.out.println("Failed to make connection!");
-	}
-  }
+        Profile p = new ProfileImpl();
+        p.setParameter(Profile.MAIN_HOST, "192.168.1.4");
+        p.setParameter(Profile.MAIN_PORT, "1099");
+        p.setParameter(Profile.GUI, "true");
         
-    }
+        ContainerController cc = rt.createMainContainer(p);
+        if(cc != null){
+            Connection conn = null;
+            Statement stmt = null;
+            try{
+               Class.forName("com.mysql.jdbc.Driver");
+
+               conn = DriverManager.getConnection(DB_URL, USER, PASS);
+
+               stmt = conn.createStatement();
+
+               String sql = "SELECT * FROM course";
+               ResultSet rs = stmt.executeQuery(sql);
+               AgentController ac = null;
+               while(rs.next()){
+                  int id  = rs.getInt("course_id");
+                  int isEnglishCom = rs.getInt("english");
+                  int isMathsCom = rs.getInt("maths");
+                  String courseName = rs.getString("course_name");
+                  ArrayList<ArrayList<SubjectCombination>> subjectsLists = getSubjectLists(conn, id);
+                  List<Integer> offierdUniversities = getOfferedUniIds(conn, id);
+                  
+                  Object[] argumentsToAgent = {courseName, subjectsLists, offierdUniversities, new Integer(isEnglishCom), new Integer(isMathsCom)};
+                  
+                  ac = cc.createNewAgent(courseName , "courseSelection.course.CourseAgent", argumentsToAgent);
+                  ac.start();
+
+               }
+               rs.close();
+            }catch(SQLException se){
+               //Handle errors for JDBC
+               se.printStackTrace();
+            }catch(Exception e){
+               //Handle errors for Class.forName
+               e.printStackTrace();
+            }finally{
+               //finally block used to close resources
+               try{
+                  if(stmt!=null)
+                     conn.close();
+               }catch(SQLException se){
+               }// do nothing
+               try{
+                  if(conn!=null)
+                     conn.close();
+               }catch(SQLException se){
+                  se.printStackTrace();
+               }//end finally try
+            }//end try
+        }
+}
+   
+   public ArrayList<ArrayList<SubjectCombination>> getSubjectLists(Connection conn, int courseId) throws SQLException{
+      Statement stmt = conn.createStatement();
+
+      String sql = "SELECT * FROM subject_com  where second_op_number !="+-1+" and course_id="+courseId;
+      ResultSet rs = stmt.executeQuery(sql);
+      ArrayList<ArrayList<SubjectCombination>> returnRs = new ArrayList<ArrayList<SubjectCombination>>();
+      while(rs.next()){
+         int subComId = rs.getInt("sub_com_id");
+         int subjectCount = rs.getInt("num_subj");
+         int secondOpNumber = rs.getInt("second_op_number");
+         List<Integer> subjectIds = getSubjectIds(conn, subComId);
+         
+         List<SubjectCombination> scList = new ArrayList<SubjectCombination>();
+         SubjectCombination sc = new SubjectCombination();
+         sc.setSubjectCount(subjectCount);
+         sc.setSubjectIds(subjectIds);
+         scList.add(sc);
+         if(secondOpNumber != 0) {
+            scList.add(getSubjectCombination(conn, secondOpNumber));
+         }
+         
+         
+         returnRs.add((ArrayList<SubjectCombination>) scList);
+         
+      }
+      rs.close();
+       return returnRs;
+   }
+   
+   public List<Integer> getSubjectIds(Connection conn, int subComId) throws SQLException {
+      Statement stmt = conn.createStatement();
+
+      String sql = "SELECT * FROM sub_com_subjects  where sub_com_id="+subComId;
+      ResultSet rs = stmt.executeQuery(sql);
+      List<Integer> subjectIds = new ArrayList<>();
+      while(rs.next()){
+         int subId = rs.getInt("subject_id");
+         subjectIds.add(subId);        
+      }
+      rs.close();
+       return subjectIds;
+   }
+   
+   public SubjectCombination getSubjectCombination(Connection conn, int id) throws SQLException {
+       SubjectCombination sc = new SubjectCombination();
+       
+      Statement stmt = conn.createStatement();
+
+      String sql = "SELECT * FROM subject_com  where second_op_number ="+-1+" and sub_com_id="+id;;
+      ResultSet rs = stmt.executeQuery(sql);
+      while(rs.next()){
+         int subComId = rs.getInt("sub_com_id");
+         int subCount = rs.getInt("num_subj");
+         List<Integer> subjectIds = getSubjectIds(conn, subComId); 
+         sc.setSubjectCount(subCount);
+         sc.setSubjectIds(subjectIds);
+      }
+      rs.close();
+       
+       return sc;
+   }
+   
+   public List<Integer> getOfferedUniIds(Connection conn, int course_id) throws SQLException {
+      Statement stmt = conn.createStatement();
+
+      String sql = "SELECT * FROM offered_universities WHERE course_id="+course_id;
+      ResultSet rs = stmt.executeQuery(sql);
+      
+      List<Integer> uniList = new ArrayList<>();
+      while(rs.next()){
+         int uniId = rs.getInt("uni_id");
+         uniList.add(uniId);
+      }
+      rs.close();
+       
+       return uniList;
+   }
+        
+}
     
 
