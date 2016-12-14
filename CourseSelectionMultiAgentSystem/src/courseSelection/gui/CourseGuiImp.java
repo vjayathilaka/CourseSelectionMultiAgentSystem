@@ -66,11 +66,11 @@ public class CourseGuiImp extends JFrame{
 					uniMap.put(UNIVERSITY.UniversityOfPeradeniya.getId(), u);
 					
 					District d = new District();
-					d.setId(DISTRICT.Kegalle.getId());
+					d.setId(DISTRICT.KEGALLE.getId());
 					d.setDistrictName("kegalle");
 					d.setzScore(1);
 					Map<Integer, District> disMap = new HashMap<>();
-					disMap.put(DISTRICT.Kegalle.getId(), d);
+					disMap.put(DISTRICT.KEGALLE.getId(), d);
 					
 					Map<Integer, SCHEME> schemeMap = new HashMap<>();
 					schemeMap.put(SCHEME.ART.getId(), SCHEME.ART);

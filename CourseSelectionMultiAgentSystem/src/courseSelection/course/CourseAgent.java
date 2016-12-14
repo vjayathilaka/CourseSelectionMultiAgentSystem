@@ -1,20 +1,9 @@
 package courseSelection.course;
 
 import courseSelection.agentCreation.SubjectCombination;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.util.HashMap;
-import java.util.Hashtable;
 import java.util.List; 
 import java.util.Map;
 
-import org.codehaus.jackson.JsonGenerationException;
-import org.codehaus.jackson.JsonParseException;
-import org.codehaus.jackson.map.JsonMappingException;
-import org.codehaus.jackson.map.ObjectMapper;
-
-
-import courseSelection.constants.SCHEME;
 import courseSelection.coursegui.CourseSelectionDialog;
 import courseSelection.gui.CourseGuiImp;
 import courseSelection.ontology.Course;
@@ -45,12 +34,7 @@ import java.util.ArrayList;
 
 public class CourseAgent extends Agent {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
-	private Hashtable<Integer, String> catalogue;
-	private CourseSelectionDialog courseGui;
 
 	private Codec codec = new SLCodec();
 	private Ontology ontology = CourseSelectionOntology.getInstance();
@@ -62,6 +46,8 @@ public class CourseAgent extends Agent {
         private int isEnglishComp;
         private int isMathsComp;
         private int proposedIntake;
+        private int schemaId;
+        private Map<Integer, Float> districtZScoreMap;
 
 	protected void setup() {
 
@@ -78,6 +64,8 @@ public class CourseAgent extends Agent {
                 isMathsComp = (int) argumentsOfAgent[4];
                 proposedIntake = (int) argumentsOfAgent[5];
                 courseId = (int) argumentsOfAgent[6];
+                districtZScoreMap = (Map<Integer, Float>) argumentsOfAgent[7];
+                schemaId = (int) argumentsOfAgent[8];
 
 		// Register the Course agent service in the yellow pages
 		DFAgentDescription dfd = new DFAgentDescription();
@@ -131,30 +119,42 @@ public class CourseAgent extends Agent {
 	private synchronized void processStudentData(ACLMessage message, Action action, Agent agent) {
 		StudentCourseAction studentCourseAction = (StudentCourseAction) action.getAction();
 		Student student = studentCourseAction.getStudent();
-
-		if(true){//diff >=0 && schemesMap.containsKey(student.getSchemeId())) {
-			Course c = studentCourseAction.getCourse();
-			c.setCourseName(courseName);
-			c.setId(1);
-                        c.setUniversities(offeredUniversities);
-                        c.setProposedIntake(proposedIntake);
-                        if(isMathsComp == 1)
-                            c.setOlMaths("C");
-                        if(isEnglishComp == 1)
-                            c.setOlEnglish("C");
+                boolean flag = false;
+                //check schema is correct
+                if(schemaId == 0 || student.getSchemeId() == schemaId){
+                    //check district z-score is near 
+                    if((districtZScoreMap.get(student.getDistrictId())-0.5) < student.getzScore()){
+                        //check requred O/L english results
+                        if(isEnglishComp == 0 || student.getoLEnglish()=="A" || student.getoLEnglish()=="B" || student.getoLEnglish()=="C"){
+                            if(isMathsComp == 0 || student.getoLMaths()=="A" || student.getoLMaths()=="B" || student.getoLMaths()=="C"){
+                                flag = true;
+                            }
+                        }
                         
-			
-			sendReplyMessage(ACLMessage.INFORM, message, action, agent);
-		} /*else if(processor.machWithSchem(student.getSchemeId())){
-			Course c = studentCourseAction.getCourse();
-			c.setCourseName(courseName);
-			c.setId(1);
-			c.setzScoreDiff(processor.getZScoreDiffWithPastZScore(student.getDistrictId(), student.getzScore()));
-			c.setzScore(processor.getPreviousZScore(student.getDistrictId()));
-			
+                    }
+                    
+                }
+                
+
+		if(flag){
+                                Course c = studentCourseAction.getCourse();
+                                c.setCourseName(courseName);
+                                c.setId(1);
+                                c.setUniversities(offeredUniversities);
+                                c.setProposedIntake(proposedIntake);
+                                if(isMathsComp == 1){
+                                    c.setOlMaths("C");
+                                } else {
+                                    c.setOlMaths("N/A");
+                                }    
+                                if(isEnglishComp == 1){
+                                    c.setOlEnglish("C");
+                                } else {
+                                    c.setOlEnglish("N/A");
+                                }
+                                sendReplyMessage(ACLMessage.INFORM, message, action, agent);
+		} else {
 			sendReplyMessage(ACLMessage.REFUSE, message, action, agent);
-		} */else {
-			sendReplyMessage(ACLMessage.CANCEL, message, action, agent);
 		}
 	}
 

@@ -2,9 +2,10 @@ package courseSelection.constants;
 
 public enum SCHEME {
 	
-	SCIENCE(1, "Science"),
-	ART(2, "Art"),
-	COMMERSE(3, "Commerse");
+	ART(1, "Art Stream"),
+	COMMERCE(2, "Commerce Stream"),
+	BIOLOGICAL(3, "Biological Stream"),
+        PHYSICAL_SCIENCT(4, "Physical Science Stream");
 	
 	private int id;
 	private String name;

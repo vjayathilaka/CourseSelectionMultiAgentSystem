@@ -1,31 +1,9 @@
 package courseSelection.constants;
 
 public enum DISTRICT {
-    Jaffna(1),
-    Kilinochchi(2),
-    Mannar(3),
-    Mullaitivu(4),
-    Vavuniya(5),
-    Puttalam(6),
-    Kurunegala(7),
-    Gampaha(8),
-    Colombo(9),
-    Kalutara(10),
-    Anuradhapura(11),
-    Polonnaruwa(12),
-    Matale(13),
-    Kandy(14),
-    NuwaraEliya(15),
-    Kegalle(16),
-    Ratnapura(17),
-    Trincomalee(18),
-    Batticaloa(19),
-    Ampara(20),
-    Badulla(21),
-    Monaragala(22),
-    Hambantota(23),
-    Matara(24),
-    Galle(25);
+COLOMBO(1), GAMPAHA(2), KALUTARA(3), MATALE(4), KANDY(5), NUWARA_ELIYA(6), GALLE(7), MATARA(8),
+HAMBANTOTA(9), JAFFNA(10), KILINOCHCHI(11), MANNAR(12), MULLAITIVU(13), VAVUNIYA(14), TRINCOMALEE(15), BATTICALOA(16),
+AMPARA(17), PUTTALAM(18), KURUNEGALA(19), ANURADHAPURA(20), POLONNARUWA(21), BADULLA(22), MONARAGALA(23), KEGALLE(24);
 	
 	private int id;
 

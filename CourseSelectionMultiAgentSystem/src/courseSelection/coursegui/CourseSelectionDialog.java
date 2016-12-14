@@ -140,8 +140,8 @@ public class CourseSelectionDialog extends javax.swing.JFrame {
         jScrollPane2 = new javax.swing.JScrollPane();
         lst_supportedSchemas = new JList<SupportSchema>(new SupportSchema[]
             { new SupportSchema(SCHEME.ART.getName()),
-                new SupportSchema(SCHEME.COMMERSE.getName()),
-                new SupportSchema(SCHEME.SCIENCE.getName())});
+                new SupportSchema(SCHEME.COMMERCE.getName()),
+                new SupportSchema(SCHEME.PHYSICAL_SCIENCT.getName())});
         buttonPanel = new javax.swing.JPanel();
         btn_add = new javax.swing.JButton();
         btn_cancel = new javax.swing.JButton();

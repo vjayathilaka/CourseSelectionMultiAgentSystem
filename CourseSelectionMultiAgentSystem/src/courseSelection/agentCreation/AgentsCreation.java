@@ -11,7 +11,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class AgentsCreation {
     
@@ -50,11 +52,13 @@ public class AgentsCreation {
                   int isEnglishCom = rs.getInt("english");
                   int isMathsCom = rs.getInt("maths");
                   int proposedIntake = rs.getInt("proposed_intake");
+                  int schemaId = rs.getInt("schema_id");
                   String courseName = rs.getString("course_name");
                   ArrayList<ArrayList<SubjectCombination>> subjectsLists = getSubjectLists(conn, id);
                   List<Integer> offierdUniversities = getOfferedUniIds(conn, id);
+                  Map<Integer, Float> districtZScoreMap = getDistrictZScoreMap(conn, id);
                   
-                  Object[] argumentsToAgent = {courseName, subjectsLists, offierdUniversities, new Integer(isEnglishCom), new Integer(isMathsCom), new Integer(proposedIntake), new Integer(id)};
+                  Object[] argumentsToAgent = {courseName, subjectsLists, offierdUniversities, new Integer(isEnglishCom), new Integer(isMathsCom), new Integer(proposedIntake), new Integer(id),districtZScoreMap, new Integer(schemaId)};
                   
                   ac = cc.createNewAgent(courseName , "courseSelection.course.CourseAgent", argumentsToAgent);
                   ac.start();
@@ -162,6 +166,23 @@ public class AgentsCreation {
       rs.close();
        
        return uniList;
+   }
+   
+   public Map<Integer, Float> getDistrictZScoreMap(Connection conn, int courseId) throws SQLException {
+      Statement stmt = conn.createStatement();
+
+      String sql = "SELECT * FROM district_zscore WHERE course_id="+courseId;
+      ResultSet rs = stmt.executeQuery(sql);
+      
+      Map<Integer, Float> districtZscoreMap = new HashMap<>();
+      while(rs.next()){
+         int districtId = rs.getInt("district_id");
+         float zScore = rs.getInt("zscore");
+         districtZscoreMap.put(districtId, zScore);
+      }
+      rs.close();
+       
+       return districtZscoreMap;
    }
         
 }
