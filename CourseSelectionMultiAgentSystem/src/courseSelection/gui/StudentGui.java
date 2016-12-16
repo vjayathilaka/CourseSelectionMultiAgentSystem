@@ -45,7 +45,7 @@ public class StudentGui extends javax.swing.JFrame {
     
     public void updateStudentGUI(List<Course> courses) {
         recivedCoursesList = courses;
-
+        coursesList.removeAll();
         DefaultListModel lm = new DefaultListModel();
         System.out.println("outside loop");
         for(Course course : courses){
@@ -53,8 +53,42 @@ public class StudentGui extends javax.swing.JFrame {
             System.out.println(course.getId());
             lm.addElement(course.getCourseName());
         }
+        
         coursesList.setModel(lm);
+        coursesList.repaint();
+        coursesList.addMouseListener(mouseListener);
     }
+    
+    MouseListener mouseListener = new MouseAdapter() {
+    public void mouseClicked(MouseEvent e) {
+        if (e.getClickCount() == 1) {
+            Course selectedCourse = null;
+           String selectedItem = (String) coursesList.getSelectedValue();
+           for(Course course : recivedCoursesList) {
+                if(selectedItem == course.getCourseName()){
+                    selectedCourse = course;
+                    break;
+                }
+            }
+            courseName.setText(selectedCourse.getCourseName());
+            lastYearZscore.setText(Float.toString(selectedCourse.getzScore()));
+            proposedIntake.setText(Integer.toString(selectedCourse.getProposedIntake()));
+            List uniIds = selectedCourse.getUniversities();
+            UNIVERSITY uni = null;
+            String uniStr = "<html>";
+            for(int i=0; i<uniIds.size(); i++){
+                Long val = (Long) uniIds.get(i);
+                uni = UNIVERSITY.getById(val.intValue());
+                uniStr = uniStr + uni.getName() + "<br>";
+            }
+            uniStr = uniStr + "</html>";
+           offeredUniversities.setText(uniStr);
+           olEnglishCom.setText(selectedCourse.getOlEnglish());
+           olMathsCom.setText(selectedCourse.getOlMaths());
+         }
+    }
+    };
+
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -240,35 +274,6 @@ public class StudentGui extends javax.swing.JFrame {
         jLabel5.setText("Courses ");
 
         jScrollPane1.setViewportView(coursesList);
-        MouseListener mouseListener = new MouseAdapter() {
-            public void mouseClicked(MouseEvent e) {
-                if (e.getClickCount() == 1) {
-                    Course selectedCourse = null;
-                    String selectedItem = (String) coursesList.getSelectedValue();
-                    for(Course course : recivedCoursesList) {
-                        if(selectedItem == course.getCourseName()){
-                            selectedCourse = course;
-                            break;
-                        }
-                    }
-                    courseName.setText(selectedCourse.getCourseName());
-                    proposedIntake.setText(Integer.toString(selectedCourse.getProposedIntake()));
-                    List uniIds = selectedCourse.getUniversities();
-                    UNIVERSITY uni = null;
-                    String uniStr = "<html>";
-                    for(int i=0; i<uniIds.size(); i++){
-                        Long val = (Long) uniIds.get(i);
-                        uni = UNIVERSITY.getById(val.intValue());
-                        uniStr = uniStr + uni.getName() + "<br>";
-                    }
-                    uniStr = uniStr + "</html>";
-                    offeredUniversities.setText(uniStr);
-                    olEnglishCom.setText(selectedCourse.getOlEnglish());
-                    olMathsCom.setText(selectedCourse.getOlMaths());
-                }
-            }
-        };
-        coursesList.addMouseListener(mouseListener);
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -412,7 +417,7 @@ public class StudentGui extends javax.swing.JFrame {
         int districtId = selectedDistrict.getId();
         SCHEME selectedScheme = (SCHEME) schema.getSelectedItem();
         int schemeId = selectedScheme.getId();
-        float zScoreValue = Float.parseFloat(zScore.getText());
+        float zScoreValue = zScore.getText().isEmpty()?0:Float.parseFloat(zScore.getText());
         agent.sendInformationToCourseAgent(subjectId1, subjectId2, subjectId3, schemeId, districtId, zScoreValue);
     }//GEN-LAST:event_goButtonActionPerformed
 

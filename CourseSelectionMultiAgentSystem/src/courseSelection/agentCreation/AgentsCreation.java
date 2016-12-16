@@ -29,7 +29,7 @@ public class AgentsCreation {
         jade.core.Runtime rt = jade.core.Runtime.instance();
         
         Profile p = new ProfileImpl();
-        p.setParameter(Profile.MAIN_HOST, "192.168.1.4");
+        p.setParameter(Profile.MAIN_HOST, "192.168.1.5");
         p.setParameter(Profile.MAIN_PORT, "1099");
         p.setParameter(Profile.GUI, "true");
         
@@ -177,7 +177,7 @@ public class AgentsCreation {
       Map<Integer, Float> districtZscoreMap = new HashMap<>();
       while(rs.next()){
          int districtId = rs.getInt("district_id");
-         float zScore = rs.getInt("zscore");
+         float zScore = rs.getFloat("zscore");
          districtZscoreMap.put(districtId, zScore);
       }
       rs.close();

@@ -346,9 +346,6 @@
                   <StringArray count="0"/>
                 </Property>
               </Properties>
-              <AuxValues>
-                <AuxValue name="JavaCodeGenerator_AddingCodePost" type="java.lang.String" value="MouseListener mouseListener = new MouseAdapter() {&#xa;    public void mouseClicked(MouseEvent e) {&#xa;        if (e.getClickCount() == 1) {&#xa;            Course selectedCourse = null;&#xa;           String selectedItem = (String) coursesList.getSelectedValue();&#xa;           for(Course course : recivedCoursesList) {&#xa;                if(selectedItem == course.getCourseName()){&#xa;                    selectedCourse = course;&#xa;                    break;&#xa;                }&#xa;            }&#xa;            courseName.setText(selectedCourse.getCourseName());&#xa;            proposedIntake.setText(Integer.toString(selectedCourse.getProposedIntake()));&#xa;            List uniIds = selectedCourse.getUniversities();&#xa;            UNIVERSITY uni = null;&#xa;            String uniStr = &quot;&lt;html&gt;&quot;;&#xa;            for(int i=0; i&lt;uniIds.size(); i++){&#xa;                Long val = (Long) uniIds.get(i);&#xa;                uni = UNIVERSITY.getById(val.intValue());&#xa;                uniStr = uniStr + uni.getName() + &quot;&lt;br&gt;&quot;;&#xa;            }&#xa;            uniStr = uniStr + &quot;&lt;/html&gt;&quot;;&#xa;           offeredUniversities.setText(uniStr);&#xa;           olEnglishCom.setText(selectedCourse.getOlEnglish());&#xa;           olMathsCom.setText(selectedCourse.getOlMaths());&#xa;         }&#xa;    }&#xa;};&#xa;coursesList.addMouseListener(mouseListener);"/>
-              </AuxValues>
             </Component>
           </SubComponents>
         </Container>

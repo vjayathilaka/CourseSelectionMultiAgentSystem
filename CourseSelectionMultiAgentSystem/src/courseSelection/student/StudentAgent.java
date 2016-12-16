@@ -167,7 +167,7 @@ public class StudentAgent extends Agent {
 						if(courses.size() > 0){
 							studentGui.updateStudentGUI(courses);
 						} else {
-							//studentGui.populateTableWithInfo("You are not eligible for any course");
+							studentGui.updateStudentGUI(new ArrayList<Course>());
 						}
 						step = 2;
 					}

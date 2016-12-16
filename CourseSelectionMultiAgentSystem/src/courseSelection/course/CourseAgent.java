@@ -122,8 +122,14 @@ public class CourseAgent extends Agent {
                 boolean flag = false;
                 //check schema is correct
                 if(schemaId == 0 || student.getSchemeId() == schemaId){
-                    //check district z-score is near 
-                    if((districtZScoreMap.get(student.getDistrictId())-0.5) < student.getzScore()){
+                    //check district z-score is near
+                    System.out.println("Z score status");
+                    System.out.println("studentg");
+                    System.out.println(student.getzScore());
+                    System.out.println("district");
+                    System.out.println(districtZScoreMap.get(student.getDistrictId()));
+                    System.out.println((districtZScoreMap.get(student.getDistrictId())-0.5) < student.getzScore());
+                    if(student.getzScore()== 0.0 || districtZScoreMap.get(student.getDistrictId()) == null || (districtZScoreMap.get(student.getDistrictId())-0.5) < student.getzScore()){
                         //check requred O/L english results
                         if(isEnglishComp == 0 || student.getoLEnglish()=="A" || student.getoLEnglish()=="B" || student.getoLEnglish()=="C"){
                             if(isMathsComp == 0 || student.getoLMaths()=="A" || student.getoLMaths()=="B" || student.getoLMaths()=="C"){
@@ -135,13 +141,14 @@ public class CourseAgent extends Agent {
                     
                 }
                 
-
 		if(flag){
                                 Course c = studentCourseAction.getCourse();
                                 c.setCourseName(courseName);
-                                c.setId(1);
+                                c.setId(courseId);
                                 c.setUniversities(offeredUniversities);
                                 c.setProposedIntake(proposedIntake);
+                                if(student.getDistrictId() > 0 && districtZScoreMap.get(student.getDistrictId()) != null)
+                                    c.setzScore(districtZScoreMap.get(student.getDistrictId()));
                                 if(isMathsComp == 1){
                                     c.setOlMaths("C");
                                 } else {
