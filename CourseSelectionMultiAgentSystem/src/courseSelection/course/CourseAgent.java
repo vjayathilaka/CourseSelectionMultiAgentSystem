@@ -4,14 +4,10 @@ import courseSelection.agentCreation.SubjectCombination;
 import java.util.List; 
 import java.util.Map;
 
-import courseSelection.coursegui.CourseSelectionDialog;
-import courseSelection.gui.CourseGuiImp;
 import courseSelection.ontology.Course;
 import courseSelection.ontology.CourseSelectionOntology;
-import courseSelection.ontology.District;
 import courseSelection.ontology.Student;
 import courseSelection.ontology.StudentCourseAction;
-import courseSelection.ontology.University;
 import jade.content.ContentElementList;
 import jade.content.ContentManager;
 import jade.content.lang.Codec;
@@ -22,10 +18,8 @@ import jade.content.onto.OntologyException;
 import jade.content.onto.basic.Action;
 import jade.core.Agent;
 import jade.core.behaviours.CyclicBehaviour;
-import jade.core.behaviours.OneShotBehaviour;
 import jade.domain.DFService;
 import jade.domain.FIPAException;
-import jade.domain.FIPANames;
 import jade.domain.FIPAAgentManagement.DFAgentDescription;
 import jade.domain.FIPAAgentManagement.ServiceDescription;
 import jade.lang.acl.ACLMessage;
@@ -119,16 +113,36 @@ public class CourseAgent extends Agent {
 	private synchronized void processStudentData(ACLMessage message, Action action, Agent agent) {
 		StudentCourseAction studentCourseAction = (StudentCourseAction) action.getAction();
 		Student student = studentCourseAction.getStudent();
+                List<Integer> studentSubList = new ArrayList<>();
+                studentSubList.add(student.getSubject1());
+                studentSubList.add(student.getSubject2());
+                studentSubList.add(student.getSubject3());
                 boolean flag = false;
+                //check for subject combination
+                boolean overalMach = false;
+                FIRSTFOR:for(ArrayList<SubjectCombination> combinationList : courseList){
+                    int count = 0;
+                    System.out.println(courseName + " === course list count " + courseList.size());
+                    System.out.println(courseName + " === subject list count " + combinationList.size());
+                    for(SubjectCombination subjectCom : combinationList) {
+                        System.out.println(courseName + " === subject count " + subjectCom.getSubjectCount());
+                        
+                        for(int id : subjectCom.getSubjectIds()){
+                            System.out.println("Subject id = " + id);
+                        }
+                        
+                        if(subjectCom.isContainAllSubjects(studentSubList)){
+                            count++;
+                        } 
+                        if(count == combinationList.size()){
+                            overalMach = true;
+                            break FIRSTFOR;
+                        }
+                    }
+                }
                 //check schema is correct
-                if(schemaId == 0 || student.getSchemeId() == schemaId){
+                if((schemaId == 0 || student.getSchemeId() == schemaId) && overalMach){
                     //check district z-score is near
-                    System.out.println("Z score status");
-                    System.out.println("studentg");
-                    System.out.println(student.getzScore());
-                    System.out.println("district");
-                    System.out.println(districtZScoreMap.get(student.getDistrictId()));
-                    System.out.println((districtZScoreMap.get(student.getDistrictId())-0.5) < student.getzScore());
                     if(student.getzScore()== 0.0 || districtZScoreMap.get(student.getDistrictId()) == null || (districtZScoreMap.get(student.getDistrictId())-0.5) < student.getzScore()){
                         //check requred O/L english results
                         if(isEnglishComp == 0 || student.getoLEnglish()=="A" || student.getoLEnglish()=="B" || student.getoLEnglish()=="C"){

@@ -3,8 +3,8 @@ package courseSelection.agentCreation;
 import java.util.List;
 
 public class SubjectCombination {
-    int subjectCount;
-    List<Integer> subjectIds;
+    private int subjectCount;
+    private List<Integer> subjectIds;
 
     public int getSubjectCount() {
         return subjectCount;
@@ -22,5 +22,13 @@ public class SubjectCombination {
         this.subjectIds = subjectIds;
     }
     
-    
+    public boolean isContainAllSubjects(List<Integer> subList){
+        int count = 0;
+        for(int id : subList) {
+            if(subjectIds.contains(id)){
+                count++;
+            }
+        }
+        return subjectCount <= count;
+    }
 }
