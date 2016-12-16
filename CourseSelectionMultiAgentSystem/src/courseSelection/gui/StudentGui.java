@@ -47,9 +47,15 @@ public class StudentGui extends javax.swing.JFrame {
         recivedCoursesList = courses;
         coursesList.removeAll();
         DefaultListModel lm = new DefaultListModel();
-        System.out.println("outside loop");
+        
+        if(courses.isEmpty()){
+            errorMessage.setText("Please enter valid details to retrive results.");
+        } else {
+            errorMessage.setText("");
+        }
+        
+        
         for(Course course : courses){
-            System.out.println("inside loop");
             System.out.println(course.getId());
             lm.addElement(course.getCourseName());
         }
@@ -118,7 +124,6 @@ public class StudentGui extends javax.swing.JFrame {
         zScore = new javax.swing.JTextField();
         jPanel5 = new javax.swing.JPanel();
         jLabel8 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         coursesList = new javax.swing.JList();
@@ -135,7 +140,9 @@ public class StudentGui extends javax.swing.JFrame {
         olEnglishCom = new javax.swing.JLabel();
         jLabel15 = new javax.swing.JLabel();
         olMathsCom = new javax.swing.JLabel();
-        jLabel9 = new javax.swing.JLabel();
+        jLabel16 = new javax.swing.JLabel();
+        jLabel17 = new javax.swing.JLabel();
+        errorMessage = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -271,8 +278,6 @@ public class StudentGui extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        jLabel5.setText("Courses ");
-
         jScrollPane1.setViewportView(coursesList);
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
@@ -283,7 +288,7 @@ public class StudentGui extends javax.swing.JFrame {
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING)
         );
 
         jPanel3.setBorder(javax.swing.BorderFactory.createEtchedBorder());
@@ -359,10 +364,15 @@ public class StudentGui extends javax.swing.JFrame {
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel15)
                     .addComponent(olMathsCom))
-                .addContainerGap(222, Short.MAX_VALUE))
+                .addContainerGap(200, Short.MAX_VALUE))
         );
 
-        jLabel9.setText("Course Details ");
+        jLabel16.setText("Courses");
+
+        jLabel17.setText("Course Details");
+
+        errorMessage.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        errorMessage.setForeground(new java.awt.Color(255, 0, 0));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -376,13 +386,17 @@ public class StudentGui extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel5))
+                            .addComponent(jLabel16))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel9)
+                                .addComponent(jLabel17)
                                 .addGap(0, 0, Short.MAX_VALUE))
-                            .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                            .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(10, 10, 10)
+                        .addComponent(errorMessage)
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -393,13 +407,15 @@ public class StudentGui extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel5)
-                    .addComponent(jLabel9))
+                .addComponent(errorMessage, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel16)
+                    .addComponent(jLabel17))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
 
@@ -417,8 +433,10 @@ public class StudentGui extends javax.swing.JFrame {
         int districtId = selectedDistrict.getId();
         SCHEME selectedScheme = (SCHEME) schema.getSelectedItem();
         int schemeId = selectedScheme.getId();
+        String olEnglishVal = (String) olEnglish.getSelectedItem();
+        String olMathsVal = (String) olMaths.getSelectedItem();
         float zScoreValue = zScore.getText().isEmpty()?0:Float.parseFloat(zScore.getText());
-        agent.sendInformationToCourseAgent(subjectId1, subjectId2, subjectId3, schemeId, districtId, zScoreValue);
+        agent.sendInformationToCourseAgent(subjectId1, subjectId2, subjectId3, schemeId, districtId, zScoreValue, olEnglishVal, olMathsVal);
     }//GEN-LAST:event_goButtonActionPerformed
 
     /**
@@ -461,6 +479,7 @@ public class StudentGui extends javax.swing.JFrame {
     private javax.swing.JLabel courseName;
     private javax.swing.JList coursesList;
     private javax.swing.JComboBox district;
+    private javax.swing.JLabel errorMessage;
     private javax.swing.JButton goButton;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
@@ -469,14 +488,14 @@ public class StudentGui extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
+    private javax.swing.JLabel jLabel16;
+    private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
-    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;

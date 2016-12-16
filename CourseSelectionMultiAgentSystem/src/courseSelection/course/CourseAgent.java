@@ -122,15 +122,8 @@ public class CourseAgent extends Agent {
                 boolean overalMach = false;
                 FIRSTFOR:for(ArrayList<SubjectCombination> combinationList : courseList){
                     int count = 0;
-                    System.out.println(courseName + " === course list count " + courseList.size());
-                    System.out.println(courseName + " === subject list count " + combinationList.size());
+
                     for(SubjectCombination subjectCom : combinationList) {
-                        System.out.println(courseName + " === subject count " + subjectCom.getSubjectCount());
-                        
-                        for(int id : subjectCom.getSubjectIds()){
-                            System.out.println("Subject id = " + id);
-                        }
-                        
                         if(subjectCom.isContainAllSubjects(studentSubList)){
                             count++;
                         } 
@@ -140,13 +133,20 @@ public class CourseAgent extends Agent {
                         }
                     }
                 }
+                
+                //student subjects are same. it should be omited
+                boolean isSubjectsAreNotSame = true;
+                if(student.getSubject1() == student.getSubject2() || student.getSubject1() == student.getSubject3()
+                        || student.getSubject2() == student.getSubject3())
+                    isSubjectsAreNotSame = false;
+                
                 //check schema is correct
-                if((schemaId == 0 || student.getSchemeId() == schemaId) && overalMach){
+                if((schemaId == 0 || student.getSchemeId() == 0 || student.getSchemeId() == schemaId) && overalMach && isSubjectsAreNotSame){
                     //check district z-score is near
-                    if(student.getzScore()== 0.0 || districtZScoreMap.get(student.getDistrictId()) == null || (districtZScoreMap.get(student.getDistrictId())-0.5) < student.getzScore()){
+                    if(student.getzScore()== 0.0 || districtZScoreMap.get(student.getDistrictId()) == null || (districtZScoreMap.get(student.getDistrictId())) < student.getzScore()){
                         //check requred O/L english results
-                        if(isEnglishComp == 0 || student.getoLEnglish()=="A" || student.getoLEnglish()=="B" || student.getoLEnglish()=="C"){
-                            if(isMathsComp == 0 || student.getoLMaths()=="A" || student.getoLMaths()=="B" || student.getoLMaths()=="C"){
+                        if(isEnglishComp == 0 || "A".equals(student.getoLEnglish()) || "B".equals(student.getoLEnglish()) || "C".equals(student.getoLEnglish())){
+                            if(isMathsComp == 0 || "A".equals(student.getoLMaths()) || "B".equals(student.getoLMaths()) || "C".equals(student.getoLMaths())){
                                 flag = true;
                             }
                         }

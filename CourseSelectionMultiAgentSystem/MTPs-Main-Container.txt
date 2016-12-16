@@ -1,2 +1,1 @@
-http://localhost.localdomain
-centos7.example.com:7778/acc
+http://ASUSi3RADEON:7778/acc

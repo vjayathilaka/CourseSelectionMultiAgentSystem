@@ -23,13 +23,13 @@ public class AgentsCreation {
 
    //  Database credentials
    static final String USER = "root";
-   static final String PASS = "";
+   static final String PASS = "hiran";
    
     public void createAgents() {
         jade.core.Runtime rt = jade.core.Runtime.instance();
         
         Profile p = new ProfileImpl();
-        p.setParameter(Profile.MAIN_HOST, "192.168.1.5");
+        p.setParameter(Profile.MAIN_HOST, "192.168.1.4");
         p.setParameter(Profile.MAIN_PORT, "1099");
         p.setParameter(Profile.GUI, "true");
         
@@ -98,9 +98,10 @@ public class AgentsCreation {
       ArrayList<ArrayList<SubjectCombination>> returnRs = new ArrayList<ArrayList<SubjectCombination>>();
       while(rs.next()){
          int subComId = rs.getInt("sub_com_id");
+         int subListId = rs.getInt("subject_list_id");
          int subjectCount = rs.getInt("num_subj");
          int secondOpNumber = rs.getInt("second_op_number");
-         List<Integer> subjectIds = getSubjectIds(conn, subComId);
+         List<Integer> subjectIds = getSubjectIds(conn, subListId);
          
          List<SubjectCombination> scList = new ArrayList<SubjectCombination>();
          SubjectCombination sc = new SubjectCombination();
@@ -143,7 +144,8 @@ public class AgentsCreation {
       while(rs.next()){
          int subComId = rs.getInt("sub_com_id");
          int subCount = rs.getInt("num_subj");
-         List<Integer> subjectIds = getSubjectIds(conn, subComId); 
+         int sub_list_id = rs.getInt("subject_list_id");
+         List<Integer> subjectIds = getSubjectIds(conn, sub_list_id); 
          sc.setSubjectCount(subCount);
          sc.setSubjectIds(subjectIds);
       }

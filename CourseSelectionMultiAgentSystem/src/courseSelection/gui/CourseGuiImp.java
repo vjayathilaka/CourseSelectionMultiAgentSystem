@@ -60,10 +60,10 @@ public class CourseGuiImp extends JFrame{
 					course.setId(Integer.parseInt(cZScore));
 					
 					University u = new University();
-					u.setId(UNIVERSITY.UniversityOfPeradeniya.getId());
-					u.setUniversityName(UNIVERSITY.UniversityOfPeradeniya.getName());
+					u.setId(UNIVERSITY.EASTERN_UNIVERSITY.getId());
+					u.setUniversityName(UNIVERSITY.EASTERN_UNIVERSITY.getName());
 					Map<Integer, University> uniMap = new HashMap<>();
-					uniMap.put(UNIVERSITY.UniversityOfPeradeniya.getId(), u);
+					uniMap.put(UNIVERSITY.EASTERN_UNIVERSITY.getId(), u);
 					
 					District d = new District();
 					d.setId(DISTRICT.KEGALLE.getId());

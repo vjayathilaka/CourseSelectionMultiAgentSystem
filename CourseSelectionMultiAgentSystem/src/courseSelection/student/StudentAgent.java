@@ -70,14 +70,18 @@ public class StudentAgent extends Agent {
 
 	}
 
-	public void sendInformationToCourseAgent(int sub1Id, int sub2Id, int sub3Id, int schemaId, int districtId, float zScore) {                StudentCourseAction sca = new StudentCourseAction();
+	public void sendInformationToCourseAgent(int sub1Id, int sub2Id, int sub3Id, int schemaId, int districtId, float zScore, String olEnglish, String olMaths) {                
+            
+                StudentCourseAction sca = new StudentCourseAction();
                 Student s = new Student();
-               s.setSubject1(sub1Id);
-               s.setSubject2(sub2Id);
-               s.setSubject3(sub3Id);
+                s.setSubject1(sub1Id);
+                s.setSubject2(sub2Id);
+                s.setSubject3(sub3Id);
                 s.setDistrictId(districtId);
                 s.setSchemeId(schemaId);
                 s.setzScore(zScore);
+                s.setoLEnglish(olEnglish);
+                s.setoLMaths(olMaths);
                 sca.setStudent(s);
                 
                 Course c = new Course();

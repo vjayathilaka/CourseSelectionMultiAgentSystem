@@ -26,7 +26,19 @@ public enum SUBJECT {
     ENGLISH(14, "English"),
     FRENCH(15, "French"),
     BUSINESS_STATISTICS(16, "Business Sstatistics"),
-    HISTORY(17, "History");
+    HISTORY(17, "History"),
+    HOME_ECHONOMICS(18, "Home Echonomics"),
+    COMMUNICATION_AND_MEDIA_STUDIES(19, "Communication and media studies"),
+    CIVIL_TECHNOLOGY(20, "Civil Technology"),
+    ELECTRONIC_ELECTRICAL_AND_INFORMATION_TECHNOLOGY(21, "Electronic, Electrical and infromation technology"),
+    MECHANICAL_TECHNOLOGY(22, "Mechanical technologies"),
+    FOOD_TECHNOLOGY(23, "Food Technology"),
+    BIO_RESOURSE_TECHNOLOGY(24, "Bio Resourse Technology"),
+    AGRO_TECHNOLOGY(25, "Agro Technology"),
+    SINGHALA(26, "Singhala"),
+    TAMIL(27, "Tamil"),
+    BIOLOGY(28, "Biology");
+    
     //OL_ENGLISH(4, "OL English"),
     //OL_MATHS(5, "OL Maths");
     

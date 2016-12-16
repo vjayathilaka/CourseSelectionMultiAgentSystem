@@ -69,20 +69,20 @@ public class CourseSelectionDialog extends javax.swing.JFrame {
         lbl_offeredUniversities = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         lst_offeredUniversities = new JList<OfferedUniversity>(
-            new OfferedUniversity[] { new OfferedUniversity(UNIVERSITY.UniversityOfColombo.getName()),
-                new OfferedUniversity(UNIVERSITY.UniversityOfPeradeniya.getName()),
-                new OfferedUniversity(UNIVERSITY.UniversityOfMoratuwa.getName()),
-                new OfferedUniversity(UNIVERSITY.UniversityOfKelaniya.getName()),
-                new OfferedUniversity(UNIVERSITY.UniversityOfSriJayewardenepura.getName()),
-                new OfferedUniversity(UNIVERSITY.UniversityOfRuhuna.getName()),
-                new OfferedUniversity(UNIVERSITY.OpenUniversityOfSriLanka.getName()),
-                new OfferedUniversity(UNIVERSITY.UniversityOfJaffna.getName()),
-                new OfferedUniversity(UNIVERSITY.SouthEasternUniversityOfSriLanka.getName()),
-                new OfferedUniversity(UNIVERSITY.RajarataUniversity.getName()),
-                new OfferedUniversity(UNIVERSITY.SabaragamuwaUniversity.getName()),
-                new OfferedUniversity(UNIVERSITY.EasternUniversity.getName()),
-                new OfferedUniversity(UNIVERSITY.UniversityOfTheVisualAndPerformingArts.getName()),
-                new OfferedUniversity(UNIVERSITY.WayambaUniversity.getName())});
+            new OfferedUniversity[] { new OfferedUniversity(UNIVERSITY.EASTERN_UNIVERSITY.getName()),
+                new OfferedUniversity(UNIVERSITY.EASTERN_UNIVERSITY.getName()),
+                new OfferedUniversity(UNIVERSITY.EASTERN_UNIVERSITY.getName()),
+                new OfferedUniversity(UNIVERSITY.EASTERN_UNIVERSITY.getName()),
+                new OfferedUniversity(UNIVERSITY.EASTERN_UNIVERSITY.getName()),
+                new OfferedUniversity(UNIVERSITY.EASTERN_UNIVERSITY.getName()),
+                new OfferedUniversity(UNIVERSITY.EASTERN_UNIVERSITY.getName()),
+                new OfferedUniversity(UNIVERSITY.EASTERN_UNIVERSITY.getName()),
+                new OfferedUniversity(UNIVERSITY.EASTERN_UNIVERSITY.getName()),
+                new OfferedUniversity(UNIVERSITY.EASTERN_UNIVERSITY.getName()),
+                new OfferedUniversity(UNIVERSITY.EASTERN_UNIVERSITY.getName()),
+                new OfferedUniversity(UNIVERSITY.EASTERN_UNIVERSITY.getName()),
+                new OfferedUniversity(UNIVERSITY.EASTERN_UNIVERSITY.getName()),
+                new OfferedUniversity(UNIVERSITY.EASTERN_UNIVERSITY.getName())});
         	
         lbl_districtZScore = new javax.swing.JLabel();
         lbl_supportedSchemas = new javax.swing.JLabel();

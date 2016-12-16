@@ -1,7 +1,7 @@
 package courseSelection.constants;
 
 public enum SCHEME {
-	
+	please_select(0, "Please Select"),
 	ART(1, "Art Stream"),
 	COMMERCE(2, "Commerce Stream"),
 	BIOLOGICAL(3, "Biological Stream"),
