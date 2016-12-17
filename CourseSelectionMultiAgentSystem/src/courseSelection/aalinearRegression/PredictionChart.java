@@ -10,6 +10,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Vector;
 import javax.swing.table.DefaultTableModel;
+import org.jfree.ui.RefineryUtilities;
 
 /**
  *
@@ -57,7 +58,7 @@ public class PredictionChart extends javax.swing.JFrame {
         predictY = new javax.swing.JTextField();
         predictButton = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTable2 = new javax.swing.JTable();
+        predictTable = new javax.swing.JTable();
         jButton1 = new javax.swing.JButton();
         clearButton = new javax.swing.JButton();
 
@@ -149,7 +150,7 @@ public class PredictionChart extends javax.swing.JFrame {
             }
         });
 
-        jTable2.setModel(new javax.swing.table.DefaultTableModel(
+        predictTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -157,7 +158,7 @@ public class PredictionChart extends javax.swing.JFrame {
                 "X", "Y"
             }
         ));
-        jScrollPane2.setViewportView(jTable2);
+        jScrollPane2.setViewportView(predictTable);
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -200,8 +201,18 @@ public class PredictionChart extends javax.swing.JFrame {
         );
 
         jButton1.setText("Chart");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         clearButton.setText("Clear");
+        clearButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                clearButtonActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -274,8 +285,14 @@ public class PredictionChart extends javax.swing.JFrame {
     }
     
     private void predictButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_predictButtonActionPerformed
-        float x = Float.parseFloat(predictX.getText());
-        float y = Float.parseFloat(predictY.getText());
+        float x = 0.0f;
+        float y = 0.0f;
+        if(!"".equals(predictX.getText())){
+            x = Float.parseFloat(predictX.getText());
+        }        
+        if(!"".equals(predictY.getText())){
+            y = Float.parseFloat(predictY.getText());
+        }
         
         DefaultTableModel addTableModel = (DefaultTableModel) addTable.getModel();
         List<Float> xList = new ArrayList<>();
@@ -299,6 +316,15 @@ public class PredictionChart extends javax.swing.JFrame {
             float predictYValue = getPredictedValue(xList, yList, x, y, true);
             predictY.setText(Float.toString(predictYValue));
         }
+        
+        //update predicted table
+        float preX = Float.parseFloat(predictX.getText());
+        float preY = Float.parseFloat(predictY.getText());
+        DefaultTableModel predictTableModel = (DefaultTableModel) predictTable.getModel();
+        predictTableModel.addRow(new Object[]{preX, preY});
+        
+        predictX.setText("");
+        predictY.setText("");
     }//GEN-LAST:event_predictButtonActionPerformed
 
     private void addButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addButtonActionPerformed
@@ -307,7 +333,49 @@ public class PredictionChart extends javax.swing.JFrame {
 
         DefaultTableModel model = (DefaultTableModel) addTable.getModel();
         model.addRow(new Object[]{x,y});
+        
+        addX.setText("");
+        addY.setText("");
     }//GEN-LAST:event_addButtonActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+       
+        List<Float> xList = new ArrayList<>();
+        List<Float> yList = new ArrayList<>();
+       
+        DefaultTableModel addTableModel = (DefaultTableModel) addTable.getModel();
+        int nRow = addTableModel.getRowCount(), nCol = addTableModel.getColumnCount();
+        for (int i = 0 ; i < nRow ; i++){
+            for (int j = 0 ; j < nCol ; j++){
+                if(j==0)
+                    xList.add((Float) addTableModel.getValueAt(i,j));
+                if(j==1)
+                    yList.add((Float) addTableModel.getValueAt(i,j));
+            }
+        }
+         
+        DefaultTableModel preTableModel = (DefaultTableModel) predictTable.getModel();
+        int nRowPre = preTableModel.getRowCount(), nColPre = preTableModel.getColumnCount();
+        for (int k = 0 ; k < nRowPre ; k++){
+            for (int l = 0 ; l < nColPre ; l++){
+                if(l==0)
+                    xList.add((Float) preTableModel.getValueAt(k,l));
+                if(l==1)
+                    yList.add((Float) preTableModel.getValueAt(k,l));
+            }
+        }
+        
+        XYChart chart = new XYChart("XY Chart", xList, yList);
+        chart.pack( );          
+        RefineryUtilities.centerFrameOnScreen( chart );          
+        chart.setVisible( true );
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void clearButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clearButtonActionPerformed
+
+        ((DefaultTableModel)addTable.getModel()).setRowCount(0);
+        ((DefaultTableModel)predictTable.getModel()).setRowCount(0);
+    }//GEN-LAST:event_clearButtonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -360,8 +428,8 @@ public class PredictionChart extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTable jTable2;
     private javax.swing.JButton predictButton;
+    private javax.swing.JTable predictTable;
     private javax.swing.JTextField predictX;
     private javax.swing.JTextField predictY;
     // End of variables declaration//GEN-END:variables
