@@ -37,7 +37,10 @@ public enum SUBJECT {
     AGRO_TECHNOLOGY(25, "Agro Technology"),
     SINGHALA(26, "Singhala"),
     TAMIL(27, "Tamil"),
-    BIOLOGY(28, "Biology");
+    BIOLOGY(28, "Biology"),
+    POLITICAL_SCIENCE(29, "Political Science"),
+    MEDIA(30, "Media"),
+    BUDHIST_CULTURE(31, "Budhist Culture");
     
     //OL_ENGLISH(4, "OL English"),
     //OL_MATHS(5, "OL Maths");

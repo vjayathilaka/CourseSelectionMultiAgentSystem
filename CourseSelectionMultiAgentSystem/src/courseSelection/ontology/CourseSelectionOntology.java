@@ -1,4 +1,4 @@
-package courseSelection.ontology;
+ package courseSelection.ontology;
 
 import jade.content.onto.BasicOntology;
 import jade.content.onto.CFReflectiveIntrospector;
